@@ -1,0 +1,31 @@
+<section class="case-studies py-5" id="case-studies">
+    <div class="container">
+        <h2 class="text-center mb-4">Case Studies</h2>
+        <p class="text-center mb-5">Explore how we’ve helped businesses achieve success through innovative designs and accessible solutions.</p>
+        <div class="row">
+            <?php
+            $args = array('post_type' => 'case_study', 'posts_per_page' => 3);
+            $case_studies = new WP_Query($args);
+
+            if ($case_studies->have_posts()) :
+                while ($case_studies->have_posts()) : $case_studies->the_post(); ?>
+                    <div class="col-md-4">
+                        <div class="card h-100 shadow-sm">
+                            <?php if (has_post_thumbnail()) : ?>
+                                <img src="<?php the_post_thumbnail_url('medium'); ?>" class="card-img-top" alt="<?php the_title(); ?>">
+                            <?php endif; ?>
+                            <div class="card-body">
+                                <h5 class="card-title"><?php the_title(); ?></h5>
+                                <p class="card-text"><?php echo wp_trim_words(get_the_excerpt(), 20); ?></p>
+                                <a href="<?php the_permalink(); ?>" class="btn btn-primary">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                <?php endwhile;
+                wp_reset_postdata();
+            else : ?>
+                <p class="text-center">No case studies available.</p>
+            <?php endif; ?>
+        </div>
+    </div>
+</section>
